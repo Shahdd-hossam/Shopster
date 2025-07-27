@@ -46,9 +46,9 @@ class HomeScreen extends StatelessWidget {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: const [
-                  CategoryCard(title: "Study", icon: Icons.book),
-                  CategoryCard(title: "Work", icon: Icons.work),
-                  CategoryCard(title: "Fun", icon: Icons.emoji_emotions),
+                  CategoryCard(title: "products", icon: Icons.restaurant_rounded),
+                  CategoryCard(title: "offers", icon: Icons.discount),
+                  CategoryCard(title: "new", icon: Icons.fiber_new_rounded),
                 ],
               ),
             ),
@@ -59,10 +59,10 @@ class HomeScreen extends StatelessWidget {
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
                 children: const [
-                  FeatureCard(title: "AI Assistant", icon: Icons.smart_toy, color: Colors.teal),
-                  FeatureCard(title: "Resume Tips", icon: Icons.description, color: Colors.orange),
-                  FeatureCard(title: "Mock Interview", icon: Icons.mic, color: Colors.purple),
-                  FeatureCard(title: "Job Market", icon: Icons.show_chart, color: Colors.indigo),
+                  FeatureCard(title: "Product1", icon: Icons.add_photo_alternate_outlined, color: Colors.teal),
+                  FeatureCard(title: "Product2", icon: Icons.add_photo_alternate_outlined, color: Colors.orange),
+                  FeatureCard(title: "Product3", icon: Icons.add_photo_alternate_outlined, color: Colors.purple),
+                  FeatureCard(title: "Product4", icon: Icons.add_photo_alternate_outlined, color: Colors.indigo),
                 ],
               ),
             ),
@@ -74,7 +74,7 @@ class HomeScreen extends StatelessWidget {
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Jobs'),
+          BottomNavigationBarItem(icon: Icon(Icons.production_quantity_limits_sharp), label: 'Cart'),
           BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Saved'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
