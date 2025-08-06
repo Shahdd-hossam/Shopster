@@ -2,25 +2,22 @@ import 'package:flutter/material.dart';
 
 class CustomOutlinedButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
-  final Color borderColor;
-  final Color textColor;
+  final dynamic onPressed;
 
   const CustomOutlinedButton({
     super.key,
     required this.text,
     required this.onPressed,
-    this.borderColor = Colors.white,
-    this.textColor = Colors.black, 
   });
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return OutlinedButton(
       onPressed: onPressed,
       style: OutlinedButton.styleFrom(
-        foregroundColor: textColor,
-        side: BorderSide(color: borderColor),
+        foregroundColor: theme.colorScheme.primary,
+        side: BorderSide(color: theme.colorScheme.primary),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),

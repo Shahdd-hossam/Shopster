@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/Features/Home/home_widgets/category_cards.dart';
 import 'package:new_app/Features/Home/home_widgets/features_cards.dart';
-import 'package:new_app/Features/widgets/app_search_bar.dart';
+import 'package:new_app/Features/widgets/app_searchbar.dart';
+import 'package:new_app/Features/widgets/app_topbar.dart';
+import 'package:new_app/Theme/theme_manager.dart';
 import 'package:new_app/core/managers/alerts_manager.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -10,20 +12,31 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
-      appBar: AppBar(
-      title: const Text("Welcome Back"),
-      backgroundColor: Colors.teal,
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.logout),
-          onPressed: () {
-            AlertManager.showLogoutDialog(context);
-          },
+      appBar: CustomAppBar(
+        onToggleTheme: ThemeManager.toggleTheme,
+      ),
+       drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(color: Colors.teal),
+              child: Text(
+                'Menu',
+                style: TextStyle(color: Colors.white, fontSize: 24),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.red),
+              title: const Text('Logout'),
+              onTap: () {
+                Navigator.pop(context);
+                AlertManager.showLogoutDialog(context);
+              },
+            ),
+          ],
         ),
-      ],
-    ),
-
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -82,8 +95,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-
-
-
-

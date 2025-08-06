@@ -28,8 +28,6 @@ class AlertManager {
           CustomOutlinedButton(
             text: 'Cancel',
             onPressed: () => Navigator.pop(context),
-            borderColor: Colors.grey,
-            textColor: Colors.grey,
           ),
           CustomOutlinedButton(
             text: 'Logout',
@@ -38,8 +36,6 @@ class AlertManager {
               Navigator.pop(context); 
               _showFancyToast(); 
             },
-            borderColor: Colors.red,
-            textColor: Colors.red,
           ),
         ],
       ),

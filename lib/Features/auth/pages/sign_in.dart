@@ -3,8 +3,12 @@ import 'package:new_app/Features/Home/view/home_screen.dart';
 import 'package:new_app/Features/auth/pages/sign_up.dart';
 import 'package:new_app/Features/auth/auth_widgets/auth_card.dart';
 import 'package:new_app/Features/widgets/app_buttons.dart';
+import 'package:new_app/Features/widgets/app_colors.dart';
 import 'package:new_app/Features/widgets/app_icons.dart';
+import 'package:new_app/Features/widgets/app_strings.dart';
 import 'package:new_app/Features/widgets/app_textfields.dart';
+import 'package:new_app/core/validators/app_validators_types/email_app_validator.dart';
+import 'package:new_app/core/validators/app_validators_types/password_app_validator.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -12,17 +16,30 @@ class SignInScreen extends StatefulWidget {
   @override
   State<SignInScreen> createState() => _SignInScreenState();
 }
-
+bool isObscure = true;
 class _SignInScreenState extends State<SignInScreen> {
 final TextEditingController emailController = TextEditingController();
 final TextEditingController passwordController = TextEditingController();
+EmailAppValidator emailAppValidator = EmailAppValidator();
+PasswordAppValidator passwordAppValidator = PasswordAppValidator();
+bool isObsecure = true;
+bool isFormValid = false;
 
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
+void validateForm() {
+  //Update validator values
+  emailAppValidator.setValue(emailController.text);
+  passwordAppValidator.setValue(passwordController.text);
+
+  //Check if all fields are filled
+  bool allFieldsFilled = emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
+
+  //Check if all validators return no errors
+  bool noValidationErrors = emailAppValidator.check().isEmpty && passwordAppValidator.check().isEmpty;
+
+  setState(() {
+    isFormValid = allFieldsFilled && noValidationErrors;
+  });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +55,11 @@ final TextEditingController passwordController = TextEditingController();
               children: [
                 SizedBox(height: 20),
                 Text(
-                  'Sign in to Diprella',
+                  'Sign in to Shopster',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Colors.teal[700],
+                    color: AppColors.teal,
                   ),
                 ),
                 SizedBox(height: 20),
@@ -59,25 +76,53 @@ final TextEditingController passwordController = TextEditingController();
                 Text("or use your email account:"),
                 SizedBox(height: 10),
                 AppTextField(
-                  controller: emailController,
-                   hintText: 'Email',
-                   prefixIcon: Icons.email,
-                   keyboardType: TextInputType.emailAddress,
+                controller: emailController,
+                validator: emailAppValidator,
+                hint: AppStrings.emailAddress,
+                prefixIcon: Icon(Icons.email),
+                keyboardType: TextInputType.emailAddress,
+                onChange: (v) {
+                  setState(() {
+                    emailAppValidator.setValue(v);
+                    validateForm();
+                  });
+                },
                 ),
                 SizedBox(height: 10),
                 AppTextField(
-                   controller: passwordController,
-                   hintText: 'Password',
-                   prefixIcon: Icons.password,
-                   isPassword: true,
-                   keyboardType: TextInputType.visiblePassword,
+                  controller: passwordController,
+                  obscureText: isObsecure,
+                   validator: passwordAppValidator,
+                   hint: AppStrings.password,
+                   prefixIcon: Icon(Icons.lock),
+                    onChange: (v) {
+                      setState(() {
+                        passwordAppValidator.setValue(v);
+                        validateForm();
+                      });
+                    },
+                suffixIcon: InkWell(
+                borderRadius: BorderRadius.circular(8),
+                onTap: () {
+                  setState(() {
+                    isObsecure = !isObsecure;
+                  });
+                },
+                child: Icon(
+                  isObsecure ? Icons.visibility_off : Icons.visibility,
+                  size: 20,
+                  color: Colors.grey,
                 ),
-                SizedBox(height: 10),
+              ),
+            ),
+                SizedBox(height: 20),
                 CustomOutlinedButton(
                   text: 'SIGN IN',
-                  onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-                  },
+                  onPressed: isFormValid
+                      ? () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                        }
+                      : null, // Disabled if form is invalid
                 ),
               ],
             ),
@@ -98,7 +143,7 @@ final TextEditingController passwordController = TextEditingController();
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Hello, Friend!",
+                      "Hello, welcome Back!",
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
